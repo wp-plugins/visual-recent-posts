@@ -37,6 +37,9 @@ Also, you should know that if you are using images in your posts that are hosted
 
 Make sure you check out the <a href="http://oktober5.com/visual-recent-posts-plugin/">plugin homepage</a>. If you need my help, just leave a comment there.
 
+== Change Log ==
+v1.0 - changed thumbnail cache directory to be `wp-content/thumb-cache/`. Users of the WP super cache plugin might have noticed that deleting their cache also deleted all the thumbnails :)
+
 
 
 
