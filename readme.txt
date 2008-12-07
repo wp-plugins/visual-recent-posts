@@ -1,6 +1,6 @@
 === Visual Recent Posts ===
 Contributors: oktoberfive	
-Tags: recent posts, magazine, thumbnails, featured post
+Tags: recent posts, magazine, thumbnails, featured post, images, posts
 Donate link: http://oktober5.com/donate/
 Requires at least: 2.5
 Tested up to: 2.6.5
