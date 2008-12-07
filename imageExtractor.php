@@ -45,7 +45,7 @@ Updated some bugs in the interface methods
 
 // Configure this variable and set the cache folder for the resized images
 
-$destinationDir="/wp-content/cache/vrp_thumb/";
+$destinationDir="/wp-content/thumb-cache/";
 
 // do not touch this lines...
 

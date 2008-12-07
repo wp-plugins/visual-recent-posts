@@ -18,12 +18,12 @@ Displays your recent posts with auto-generated thumbnails and excerpts; also inc
 
 1. Upload the plugin folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Create thumbnail cache directory `vrp_thumb` under the wp-content/cache/ directory.
+1. Create thumbnail cache directory `thumb-cache` under the wp-content/cache/ directory.
 1. Place `<?php insertVisualRecentPosts(); ?>` in your template where you want things to show up. If you have a nice hook system in your theme (like Thesis theme from diythemes.com), then you don't even have to modify any code. Just enter the hook name in the plugin's option panel.
 
 == Frequently Asked Questions ==
 
-= I created the 'vrp_thumb' directory but my images aren't showing up. What do I do? =
+= I created the 'thumb-cache' directory but my images aren't showing up. What do I do? =
 
 Don't panic! OK, panic if you like, but this is probably a permissions problem. Make sure that directory is writable. If you have questions, please visit the plugin homepage and drop a comment.
 
