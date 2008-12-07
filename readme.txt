@@ -27,6 +27,8 @@ Displays your recent posts with auto-generated thumbnails and excerpts; also inc
 
 Don't panic! OK, panic if you like, but this is probably a permissions problem. Make sure that directory is writable. If you have questions, please visit the plugin homepage and drop a comment.
 
+Also, you should know that if you are using images in your posts that are hosted on another site this plugin won't be able to generate the thumbnail. So, you have to upload the images in wordpress when you're editing the post in order for things to go smoothly.
+
 == Screenshots ==
 
 1. Here's how I configured the plugin to run on my own page.
