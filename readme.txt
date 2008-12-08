@@ -4,7 +4,7 @@ Tags: recent posts, magazine, thumbnails, featured post, images, posts
 Donate link: http://oktober5.com/donate/
 Requires at least: 2.5
 Tested up to: 2.6.5
-Stable tag: 1.0.1
+Stable tag: 1.1
 
 Displays your recent posts with auto-generated thumbnails and excerpts; also includes a featured post.
 
@@ -39,6 +39,8 @@ Make sure you check out the <a href="http://oktober5.com/visual-recent-posts-plu
 
 == Change Log ==
 v1.0 - changed thumbnail cache directory to be `wp-content/thumb-cache/`. Users of the WP super cache plugin might have noticed that deleting their cache also deleted all the thumbnails :)
+
+v1.1 - The plugin was conflicting with other plugins about some session_start() garbage which I really don't understand, but after a wild copy/paste job it appears things are better now.
 
 
 
