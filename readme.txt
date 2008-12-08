@@ -42,7 +42,7 @@ v1.0 - changed thumbnail cache directory to be `wp-content/thumb-cache/`. Users 
 
 v1.1 - The plugin was conflicting with other plugins about some session_start() garbage which I really don't understand, but after a wild copy/paste job it appears things are better now.
 
-v1.1.1 - OK, for future reference, please you <?php not just <? ... OK! Seriously.... Anyway, if you were getting a function or found or something like that, hopefully it's fixed. 
+v1.1.1 - OK, for future reference, please use `<?php` not just `<?` ... OK! Seriously.... Anyway, if you were getting a function or found or something like that, hopefully it's fixed. 
 
 
 
