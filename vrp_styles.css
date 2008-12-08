@@ -1,0 +1,106 @@
+/* You can override, change, and otherwise mess with these settings as much as you like.
+In fact, I encourage it.*/
+
+.custom #vrp_box {
+}
+
+.custom #vrp_image_box {
+	/*padding-right: 0.846em;
+	padding-left: 0.846em;*/
+	/*padding-bottom: 0.5em;*/
+	/*padding-top: .846em;*/
+	background:#efefef;
+	border: 1px solid #dddddd;
+	margin:10px;
+}
+
+.custom img.vrp_img {
+	position:relative;
+	padding-top:0em;
+	padding-right:0.846em;
+	padding-left:0.846em;
+	padding-bottom:0em;
+}
+
+.custom img.vrp_img_mag {
+	position:relative;
+	float:left;
+	padding-top:0.846em;
+	padding-right:0.846em;
+	padding-left:0.846em;
+	padding-bottom:0.1em;
+}
+
+.custom #vrp_image_box #vrp_title_caption a {
+	text-decoration:none;
+	font-weight:bold;
+	color:#111111;
+	color:#5e1818;
+}
+
+.custom #vrp_image_box #vrp_title_caption a:hover {
+	text-decoration:none;
+	color:#2361a1;
+}
+
+.custom #vrp_image_box #vrp_title_caption_mag a {
+	text-decoration:none;
+	font-weight:bold;
+	color:#111111;
+	color:#5e1818;
+}
+
+.custom #vrp_image_box #vrp_title_caption_mag a:hover {
+	text-decoration:none;
+	color:#2361a1;
+}
+
+
+.custom #vrp_title_caption {
+	padding-top:5px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:5px;
+}
+
+.custom #vrp_title_caption_mag {
+	padding-top:10px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:5px;
+	
+}
+
+.custom #vrp_h3 {
+	margin:10px;
+	margin-top:20px;
+	font-size:12px;
+	color: #555;
+	font-weight: bold;
+	letter-spacing: .2em;  
+}
+
+.custom .h3_drop_cap {
+	font-size:140%;
+}
+
+.custom #vrp_excerpt p {
+	/*font-size:12px;*/
+	padding:10px 10px 10px 10px;
+	text-align: justify;
+}
+
+.custom #vrp_excerpt_mag p {
+	/*font-size:12px;*/
+	padding:0px 10px 10px 10px;
+	text-align:justify;
+}
+
+.custom #featured_tag {
+	position:relative;
+	top:2px;
+}
+
+.custom #featured_tag p {
+	font-size:12px;
+}
