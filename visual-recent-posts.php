@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin name: Visual Recent Posts
-Version: 1.0
+Version: 1.1
 Plugin URI: http://oktober5.com/visual-recent-posts-plugin/
 Description: Visually represents your most recent posts by extracting the first image from each post and displaying it along with the post title and excerpt.
 Author: Ryan Scott
@@ -24,6 +24,9 @@ Author URI: http://oktober5.com/
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+session_start();
+include_once ("imageExtractor.php");
 
 if (!class_exists("VisualRecentPostsPlugin")) {
 	class VisualRecentPostsPlugin {
