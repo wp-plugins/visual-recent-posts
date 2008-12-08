@@ -12,6 +12,8 @@ Displays your recent posts with auto-generated thumbnails and excerpts; also inc
 
 <p>This plugin gives the look of a magazine-style website with thumbnails and excerpts in a clean layout. Thumbnails are generated automatically, and there is a settings page to set an unholy amount of options. (Really, it's out of control and I'm sorry.) The latest release also has a "featured post" add-on so you can specify any post you want or just the most recent one to be put in the featured post box.</p>
 
+<p>Are you using Thesis from DIYThemes.com? Easily place your Recent Visual Posts by simply inserting your desired Thesis hook on the settings page. No code changes needed.</p>
+
 <p>This plugin uses a slightly modified version of the excellent Image Extractor plugin found at <a href="http://wordpress.org/extend/plugins/image-extractor/">wordpress.org/extend/plugins/image-extractor/</a>.</p>
 
 == Installation ==
