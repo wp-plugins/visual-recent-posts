@@ -25,7 +25,7 @@ Displays your recent posts with auto-generated thumbnails and excerpts; also inc
 
 = I created the 'thumb-cache' directory but my images aren't showing up. What do I do? =
 
-Don't panic! OK, panic if you like, but this is probably a permissions problem. Make sure that directory is writable. If you have questions, please visit the plugin homepage and drop a comment.
+Don't panic! OK, panic if you like, but this is probably a permissions problem. Make sure that directory is writable. If you have questions, please visit the plugin homepage or the <a href="http://oktober5.com/forums/">plugin forums</a>
 
 Also, you should know that if you are using images in your posts that are hosted on another site this plugin won't be able to generate the thumbnail. So, you have to upload the images in wordpress when you're editing the post in order for things to go smoothly.
 
@@ -35,7 +35,7 @@ Also, you should know that if you are using images in your posts that are hosted
 
 == I need more help! ==
 
-Make sure you check out the <a href="http://oktober5.com/visual-recent-posts-plugin/">plugin homepage</a>. If you need my help, just leave a comment there.
+Make sure you check out the <a href="http://oktober5.com/visual-recent-posts-plugin/">plugin homepage</a>. If you need my help, check out the <a href="http://oktober5.com/forums/">plugin forums</a>
 
 == Change Log ==
 v1.0 - changed thumbnail cache directory to be `wp-content/thumb-cache/`. Users of the WP super cache plugin might have noticed that deleting their cache also deleted all the thumbnails :)
