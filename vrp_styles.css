@@ -34,25 +34,19 @@ In fact, I encourage it.*/
 .custom #vrp_image_box #vrp_title_caption a {
 	text-decoration:none;
 	font-weight:bold;
-	color:#111111;
-	color:#5e1818;
 }
 
 .custom #vrp_image_box #vrp_title_caption a:hover {
 	text-decoration:none;
-	color:#2361a1;
 }
 
 .custom #vrp_image_box #vrp_title_caption_mag a {
 	text-decoration:none;
 	font-weight:bold;
-	color:#111111;
-	color:#5e1818;
 }
 
 .custom #vrp_image_box #vrp_title_caption_mag a:hover {
 	text-decoration:none;
-	color:#2361a1;
 }
 
 
