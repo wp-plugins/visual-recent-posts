@@ -10,7 +10,7 @@ Displays your recent posts with auto-generated thumbnails and excerpts; also inc
 
 == Description ==
 
-<p>If the download link here is not work--which it hasn't been as of late... grrrr--then you can download it here: <a href="http://oktober5.com/wp-content/downloads/visual-recent-posts.zip/">VRP Download Link</a></p>
+<p>If the download link here is not working--which it hasn't been as of late... grrrr--then you can download it here: <a href="http://oktober5.com/wp-content/downloads/visual-recent-posts.zip/">VRP Download Link</a></p>
 
 <p>This plugin gives the look of a magazine-style website with thumbnails and excerpts in a clean layout. Thumbnails are generated automatically, and there is a settings page to set an unholy amount of options. (Really, it's out of control and I'm sorry.) The latest release also has a "featured post" add-on so you can specify any post you want or just the most recent one to be put in the featured post box.</p>
 
