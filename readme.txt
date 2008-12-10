@@ -50,6 +50,8 @@ v1.1.1 - OK, for future reference, please use `<?php` not just `<?` ... OK! Seri
 
 v1.1.2 - No you can specify a category or multiple categories to display. And! if you don't want to display posts without images, now you can--just change your setting on the VRP options page.
 
+v1.1.3 - Added parameter to insertVisualRecentPosts() function. You can now pass $number_of_posts to specify how many posts to display for that VRP box. Helpful if you're displaying a small number of posts on the front page but want to display more posts on your category archive pages.
+
 
 
 

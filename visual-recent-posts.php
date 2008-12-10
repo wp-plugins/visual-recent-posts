@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin name: Visual Recent Posts
-Version: 1.1.2
+Version: 1.1.3
 Plugin URI: http://oktober5.com/visual-recent-posts-plugin/
 Description: Visually represents your most recent posts by extracting the first image from each post and displaying it along with the post title and excerpt.
 Author: Ryan Scott
@@ -77,11 +77,12 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			return "cheese";
 		}
 
-		function addVRP($category = '', $include_featured_post = '') {
+		function addVRP($category = '', $include_featured_post = '', $number_of_posts = '') {
 			$vrpOptions = $this->getAdminOptions();
 			
 			if($category != '') $vrpOptions['category'] = $category;
 			if($include_featured_post != '') $vrpOptions['include_featured'] = $include_featured_post;
+			if($number_of_posts != '') $vrpOptions['number_of_posts'] = $number_of_posts;
 
 			if($vrpOptions['only_front_page'] == 'true' && is_front_page()) {
 				if($vrpOptions['layout_option'] == 'vertical') $this->drawLayout_vertical($vrpOptions);
@@ -711,9 +712,9 @@ if (isset($dl_pluginVRP)) {
 	//add_filter('get_comment_author', array(&$dl_pluginVRP, 'authorUpperCase'));
 }
 
-function insertVisualRecentPosts($category = '', $include_featured_post = '') {
+function insertVisualRecentPosts($category = '', $include_featured_post = '', $number_of_posts = '') {
 	$vrp_class = new VisualRecentPostsPlugin();
-	$vrp_class->addVRP($category, $include_featured_post);
+	$vrp_class->addVRP($category, $include_featured_post, $number_of_posts);
 }
 
 ?>
