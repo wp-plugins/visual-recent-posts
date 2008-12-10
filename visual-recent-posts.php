@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin name: Visual Recent Posts
-Version: 1.1
+Version: 1.1.2
 Plugin URI: http://oktober5.com/visual-recent-posts-plugin/
 Description: Visually represents your most recent posts by extracting the first image from each post and displaying it along with the post title and excerpt.
 Author: Ryan Scott
@@ -25,8 +25,7 @@ Author URI: http://oktober5.com/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-session_start();
-include_once ("imageExtractor.php");
+include_once("imageExtractor.php");
 
 if (!class_exists("VisualRecentPostsPlugin")) {
 	class VisualRecentPostsPlugin {
@@ -40,14 +39,14 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 
 		function getDefaultOptions() {
 			$vrp_AdminOptions = array('number_of_posts' => '5', 'offset' => '0', 'custom_heading_code' => 'THE LATEST',
-				'include_post_title' => 'true', 'image_height' => '72', 'image_width' => '280', 'location_hook' => 'thesis_hook_before_content',
+				'include_post_title' => 'true', 'image_height' => '72', 'image_width' => '280', 'location_hook' => '',
 				'include_post_excerpt' => 'false', 'float_left' => 'false', 'top_margin' => '0', 'title_caption_font_size' => '12',
 				'excerpt_font_size' => '12', 'header_text_font_size' => '12', 'box_height' => '', 'right_margin' => '0',
 				'bottom_margin' => '0', 'left_margin' => '0', 'only_front_page' => 'false', 'layout_option' => 'horizontal',
 				'box_width' => '', 'include_featured' => 'false', 'featured_is_most_recent' => 'true', 'featured_layout' => 'horizontal',
 				'featured_box_width' => '', 'featured_post_id' => '', 'featured_image_width' => '400', 'featured_image_height' => '200',
 				'featured_include_excerpt' => 'true', 'featured_include_title' => 'true', 'featured_title_font_size' => '18',
-				'featured_excerpt_font_size' => '14', 'featured_tag' => '');
+				'featured_excerpt_font_size' => '14', 'featured_tag' => '', 'only_posts_with_images' => 'false', 'category' => '');
 			return $vrp_AdminOptions;
 		}
 		
@@ -78,8 +77,11 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			return "cheese";
 		}
 
-		function addVRP() {
+		function addVRP($category = '', $include_featured_post = '') {
 			$vrpOptions = $this->getAdminOptions();
+			
+			if($category != '') $vrpOptions['category'] = $category;
+			if($include_featured_post != '') $vrpOptions['include_featured'] = $include_featured_post;
 
 			if($vrpOptions['only_front_page'] == 'true' && is_front_page()) {
 				if($vrpOptions['layout_option'] == 'vertical') $this->drawLayout_vertical($vrpOptions);
@@ -210,7 +212,7 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			
 			$vrp_counter = 0;
 			global $post;
-			$myposts = get_posts('numberposts='.$vrpOptions['number_of_posts'].'&offset='.$vrpOptions['offset']);
+			$myposts = get_posts('numberposts='.$vrpOptions['number_of_posts'].'&offset='.$vrpOptions['offset'].'&category='.$vrpOptions['category']);
 			if($vrpOptions['number_of_posts'] == '0') {
 				$vrp_no_posts = 'true';
 			} else $vrp_no_posts = 'false';
@@ -229,7 +231,12 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						if($vrpOptions['featured_layout'] == 'horizontal') $this->drawFeatured_horizontal($vrpOptions, $post);
 					}
 				}
-				if($go_on == 'true' && $vrp_no_posts == 'false') {
+				$hasimagestuff = 'true';
+				if($vrpOptions['only_posts_with_images'] == 'true' && !$this->vrp_has_image($post)) {
+					$hasimagestuff = 'false';
+				} 
+				
+				if($go_on == 'true' && $vrp_no_posts == 'false' && $hasimagestuff == 'true') {
 					echo '<div id="vrp_image_box" style="width:';
 					if(intval($vrpOptions['box_width']) > (intval($vrpOptions['image_width'])+17)) {
 						echo intval($vrpOptions['box_width']).'px;';
@@ -292,7 +299,7 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 
 			$vrp_counter = 0;
 			global $post;
-			$myposts = get_posts('numberposts='.$vrpOptions['number_of_posts'].'&offset='.$vrpOptions['offset']);
+			$myposts = get_posts('numberposts='.$vrpOptions['number_of_posts'].'&offset='.$vrpOptions['offset'].'&category='.$vrpOptions['category']);
 			if($vrpOptions['number_of_posts'] == '0') {
 				$vrp_no_posts = 'true';
 			} else $vrp_no_posts = 'false';
@@ -311,8 +318,12 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						if($vrpOptions['featured_layout'] == 'horizontal') $this->drawFeatured_horizontal($vrpOptions, $post);
 					}
 				}
-				if($go_on == 'true' && $vrp_no_posts == 'false') {			
-			
+				
+				$hasimagestuff = 'true';
+				if($vrpOptions['only_posts_with_images'] == 'true' && !$this->vrp_has_image($post)) {
+					$hasimagestuff = 'false';
+				} 
+				if($go_on == 'true' && $vrp_no_posts == 'false' && $hasimagestuff == 'true') {
 					echo '<div id="vrp_image_box" style="width:';
 					if(intval($vrpOptions['box_width']) > (intval($vrpOptions['image_width'])+17)) {
 						echo intval($vrpOptions['box_width']).'px;';
@@ -366,6 +377,23 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				}
  			endforeach;
 			echo '</div>';
+		}
+
+		function vrp_has_image($vrp_post) { 
+			$text = $vrp_post->post_content;
+
+		  	// Create the parser
+		  	$parser = new htmlparser_class;
+		  
+		  	// Set the html code
+		  	$ret=$parser->InsertHTML($text);
+		  	if ($ret===false) return;
+		  	$parser->Parse();
+		  	$result=$parser->GetElements($htmlCode);
+		  	$attribArr=$parser->getTagResource("img");    
+		  	
+		  	if ($attribArr==false) return false;
+		  	return true;
 		}
 
 		//Prints out the admin page
@@ -469,6 +497,12 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						if (isset($_POST['vrp_featured_tag'])) {
 							$vrpOptions['featured_tag'] = $_POST['vrp_featured_tag'];
 						}
+						if (isset($_POST['vrp_only_posts_with_images'])) {
+							$vrpOptions['only_posts_with_images'] = $_POST['vrp_only_posts_with_images'];
+						}
+						if (isset($_POST['vrp_category'])) {
+							$vrpOptions['category'] = $_POST['vrp_category'];
+						}
 					
 						update_option($this->adminOptionsName, $vrpOptions);
 						
@@ -492,11 +526,19 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <li>thesis_hook_before_sidebars</li>
 <li>thesis_hook_after_sidebars</li>
 <li>thesis_hook_before_content</li>
-<li>thesis_hook_before_post</li>
-<li>thesis_hook_before_sidebar_1</li>
 <li>thesis_hook_after_multimedia_box</li>
 </ul>
 <p>For a complete reference of Thesis hooks, see <a href="http://diythemes.com/thesis/rtfm/hooks/">diythemes.com/thesis/rtfm/hooks/</a></p>
+<h3>If you don't have hooks, simply insert <code>insertVisualRecentPosts();</code> wherever you want things to show up (but make sure it's within a php block).</h3>
+<p>The function insertVisualRecentPosts() can also be passed the following optional parameters:</p>
+<p><strong>category</strong> - Want to define a specific category to display in this VRP box? Enter the Category ID here. To find the category ID, go to your Wordpress admin page, edit categories, click on the desired category, and in the URL box you should see something like 'cat_ID=9'. That '9' is your category ID. Also, you can insert multiple ideas seperated by a comma (ex. '9,5,3'). Also, if you want to exclude a category, enter the negative of it (ex. '-9' would display all categories but 9). Note: This option won't effect the featured post.</p>
+<p><strong>include_featured_post</strong> - Maybe you don't want to include the featured post in this instance? Specify either 'true' or 'false' (and it's case sensitive).</p>
+<p><em>Example: </em><code>insertVisualRecentPosts($category = '9', $include_featured_post = 'false')</code><em> would display only posts from category with ID 9 and the featured post would not be displayed.</em></p>
+<p>Note: If you specify a category in the function insertVisualRecentPosts(), it will override the category selection below.</p>
+
+<h3>Category</h3>
+<p>To find the category ID, go to your Wordpress admin page, edit categories, click on the desired category, and in the URL box you should see something like `cat_ID=9`. That `9` is your category ID. Also, you can insert multiple ideas seperated by a comma (ex. `9,5,3`). Also, if you want to exclude a category, enter the negative of it (ex. `-9` would display all categories but 9). Leave blank to display all categories.</p>
+<input type="text" name="vrp_category" value="<?php _e($vrpOptions['category'], 'VisualRecentPostsPlugin') ?>"></input>
 
 <h3>Display Only On Front Page</h3>
 <label for="only_front_page_yes"><input type="radio" id="only_front_page_yes" name="vrp_only_front_page" value="true" <?php if ($vrpOptions['only_front_page'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -518,6 +560,11 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <p>This only works if you use the actual excerpt field when you write your post, otherwise you'll get the excerpt of whatever page you're viewing. Stupid, I know, but the geeks at Wordpress assure me that if I understood The Loop things like this could be avoided. The Loop must be some drug they are on. I wonder where they get it . . . .</p>
 <label for="include_post_excerpt_yes"><input type="radio" id="include_post_excerpt_yes" name="vrp_include_post_excerpt" value="true" <?php if ($vrpOptions['include_post_excerpt'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
 <label for="include_post_excerpt_no"><input type="radio" id="include_post_excerpt_no" name="vrp_include_post_excerpt" value="false" <?php if ($vrpOptions['include_post_excerpt'] == "false") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?>/> No</label>
+
+<h3>Only Include Posts With Images</h3>
+<p>This does not apply to the featured post.</p>
+<label for="only_posts_with_images_yes"><input type="radio" id="only_posts_with_images_yes" name="vrp_only_posts_with_images" value="true" <?php if ($vrpOptions['only_posts_with_images'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label for="only_posts_with_images_no"><input type="radio" id="only_posts_with_images_no" name="vrp_only_posts_with_images" value="false" <?php if ($vrpOptions['only_posts_with_images'] == "false") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?>/> No</label>
 
 <h3>Layout Option</h3>
 <p>Currently, there are two layout options: horizontal and vertical. Vertical puts the title above the image and the excerpt below it. The horizontal layout puts the title and excerpt to the right of the image. (Hint: You'll probably want to set the 'Box Width' below if you choose to do a horizontal layout.)</p>
@@ -664,9 +711,9 @@ if (isset($dl_pluginVRP)) {
 	//add_filter('get_comment_author', array(&$dl_pluginVRP, 'authorUpperCase'));
 }
 
-function insertVisualRecentPosts() {
+function insertVisualRecentPosts($category = '', $include_featured_post = '') {
 	$vrp_class = new VisualRecentPostsPlugin();
-	$vrp_class->addVRP();
+	$vrp_class->addVRP($category, $include_featured_post);
 }
 
 ?>
