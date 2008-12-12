@@ -3,7 +3,7 @@ Contributors: oktoberfive
 Tags: recent posts, magazine, thumbnails, featured post, images, posts
 Donate link: http://oktober5.com/donate/
 Requires at least: 2.5
-Tested up to: 2.7 RC2
+Tested up to: 2.7
 Stable tag: 1.1.3
 
 Displays your recent posts with auto-generated thumbnails and excerpts; also includes a featured post.
