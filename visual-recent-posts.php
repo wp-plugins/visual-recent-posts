@@ -109,11 +109,11 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				echo '">';
 				
 				if($vrpOptions['featured_include_title'] == 'true') {
-					echo '<div id="vrp_title_caption"><h2><a style=" font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
+					echo '<div id="vrp_title_caption"><h3><a style=" font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
 					echo get_permalink($featuredPost->ID);//the_permalink();
 					echo '">';
 					echo $featuredPost->post_title;
-					echo '</a></h2></div>';
+					echo '</a></h3></div>';
 				} else {
 					echo '<div style="padding-top:10px;"></div>';
 				}
@@ -175,12 +175,12 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			echo '</a>';
 			
 			if($vrpOptions['featured_include_title'] == 'true') {
-				echo '<div id="vrp_title_caption_mag"><h2><a style="';
+				echo '<div id="vrp_title_caption_mag"><h3><a style="';
 				echo ' font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
 				echo get_permalink($featuredPost->ID);
 				echo '">';
 				echo $featuredPost->post_title;//the_title();
-				echo '</a></h2></div>';
+				echo '</a></h3></div>';
 			} else {
 				echo '<div style="padding-top:10px;"></div>';
 			}
