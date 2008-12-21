@@ -1,63 +1,61 @@
 /* You can override, change, and otherwise mess with these settings as much as you like.
 In fact, I encourage it.*/
 
-.custom #vrp_box {
+#vrp_box {
 }
 
-.custom #vrp_image_box {
-	/*padding-right: 0.846em;
-	padding-left: 0.846em;*/
-	/*padding-bottom: 0.5em;*/
-	/*padding-top: .846em;*/
-	background:#efefef;
-	border: 1px solid #dddddd;
-	margin:10px;
+#vrp_image_box {
+	/*margin:10px;*/
 }
 
-.custom img.vrp_img {
+img.vrp_img {
 	position:relative;
-	padding-top:0em;
+	/*padding-top:0em;
 	padding-right:0.846em;
 	padding-left:0.846em;
-	padding-bottom:0em;
+	padding-bottom:0em;*/
+	padding:0px;
+	margin:0px;
 }
 
-.custom img.vrp_img_mag {
+img.vrp_img_mag {
 	position:relative;
 	float:left;
-	padding-top:0.846em;
+	/*padding-top:0.846em;
 	padding-right:0.846em;
 	padding-left:0.846em;
-	padding-bottom:0.1em;
+	padding-bottom:0.1em;*/
+	padding:0px;
+	margin:0px;
 }
 
-.custom #vrp_image_box #vrp_title_caption a {
+#vrp_image_box #vrp_title_caption a {
 	text-decoration:none;
 	font-weight:bold;
 }
 
-.custom #vrp_image_box #vrp_title_caption a:hover {
+#vrp_image_box #vrp_title_caption a:hover {
 	text-decoration:none;
 }
 
-.custom #vrp_image_box #vrp_title_caption_mag a {
+#vrp_image_box #vrp_title_caption_mag a {
 	text-decoration:none;
 	font-weight:bold;
 }
 
-.custom #vrp_image_box #vrp_title_caption_mag a:hover {
+#vrp_image_box #vrp_title_caption_mag a:hover {
 	text-decoration:none;
 }
 
 
-.custom #vrp_title_caption {
+#vrp_title_caption {
 	padding-top:5px;
 	padding-left:10px;
 	padding-right:10px;
 	padding-bottom:5px;
 }
 
-.custom #vrp_title_caption_mag {
+#vrp_title_caption_mag {
 	padding-top:10px;
 	padding-left:10px;
 	padding-right:10px;
@@ -65,36 +63,72 @@ In fact, I encourage it.*/
 	
 }
 
-.custom #vrp_h3 {
+#vrp_h3 {
 	margin:10px;
 	margin-top:20px;
 	font-size:12px;
-	color: #555;
 	font-weight: bold;
 	letter-spacing: .2em;  
 }
 
-.custom .h3_drop_cap {
+.h3_drop_cap {
 	font-size:140%;
 }
 
-.custom #vrp_excerpt p {
+#vrp_excerpt p {
 	/*font-size:12px;*/
-	padding:10px 10px 10px 10px;
+	padding:0px;
 	text-align: justify;
 }
 
-.custom #vrp_excerpt_mag p {
+#vrp_excerpt_mag p {
 	/*font-size:12px;*/
-	padding:0px 10px 10px 10px;
+	padding:0px;
 	text-align:justify;
 }
 
-.custom #featured_tag {
+#featured_tag {
 	position:relative;
 	top:2px;
 }
 
-.custom #featured_tag p {
-	font-size:12px;
+#featured_tag p {
+}
+
+/*******************
+*** popup styles ***
+*******************/
+a.info{
+    position:relative;
+    z-index:24;
+    text-decoration:none;
+    padding:0px;
+    margin:0px;
+}
+
+a.info:hover {
+	z-index:25;
+}
+
+a.info span {
+	display: none;
+}
+
+a.info:hover span {
+    display:block;
+    position:absolute;
+    top:0.5em; left:-2em; width:17em;
+    font-size:12px;
+    background:#183b5d;
+    color:#efefef;
+    padding:10px;
+	line-height:14px;
+	z-index:5000;   
+}
+
+a.info:hover span p.pop_title {
+	font-size:14px;
+	line-height:16px;
+	padding-bottom:5px;
+	margin-bottom:0px;
 }

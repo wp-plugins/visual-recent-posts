@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin name: Visual Recent Posts
-Version: 1.1.3
+Version: 1.2
 Plugin URI: http://oktober5.com/visual-recent-posts-plugin/
 Description: Visually represents your most recent posts by extracting the first image from each post and displaying it along with the post title and excerpt.
 Author: Ryan Scott
@@ -46,7 +46,8 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				'box_width' => '', 'include_featured' => 'false', 'featured_is_most_recent' => 'true', 'featured_layout' => 'horizontal',
 				'featured_box_width' => '', 'featured_post_id' => '', 'featured_image_width' => '400', 'featured_image_height' => '200',
 				'featured_include_excerpt' => 'true', 'featured_include_title' => 'true', 'featured_title_font_size' => '18',
-				'featured_excerpt_font_size' => '14', 'featured_tag' => '', 'only_posts_with_images' => 'false', 'category' => '');
+				'featured_excerpt_font_size' => '14', 'featured_tag' => '', 'only_posts_with_images' => 'false', 'category' => '',
+				'featured_tag_font_size' => '12', 'box_background_color' => 'efefef', 'display_popups' => 'false');
 			return $vrp_AdminOptions;
 		}
 		
@@ -100,33 +101,36 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				} else {
 					echo (intval($vrpOptions['featured_image_width']) + 17).'px;';
 				}
-				/*if(!$vrpOptions['box_height'] == '') {
-					echo 'height:'.intval($vrpOptions['box_height']).'px;';
-				}*/
 				if($vrpOptions['float_left'] == 'true') {
 					echo ' float:left;';
+				}
+				if($vrpOptions['box_background_color'] != '') {
+					echo 'background:#'.$vrpOptions['box_background_color'].';';
 				}
 				echo '">';
 				
 				if($vrpOptions['featured_include_title'] == 'true') {
-					echo '<div id="vrp_title_caption"><h2><a style=" font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
+					echo '<div id="vrp_title_caption"><h3><a style=" font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
 					echo get_permalink($featuredPost->ID);//the_permalink();
 					echo '">';
 					echo $featuredPost->post_title;
-					echo '</a></h2></div>';
+					echo '</a></h3></div>';
 				} else {
 					echo '<div style="padding-top:10px;"></div>';
 				}
 				
 				echo '<a href="';
 				echo get_permalink($featuredPost->ID);//the_permalink();
-				echo '">';
+				echo '" class="info">';
+				echo '<span>';
+				the_excerpt();
+				echo '</span>';
 			 	echo image_extractor($resize = true, $resize_type = 1, $width = intval($vrpOptions['featured_image_width']), $height = intval($vrpOptions['featured_image_height']), $class = 'vrp_img', $id = '', $prefix='', $suffix='', $post=$featuredPost);
 				echo '</a>';
 				
 				if($vrpOptions['featured_include_excerpt'] == 'true') {
 					echo '<div id="vrp_excerpt" style="padding-top:0px; font-size:'.$vrpOptions['featured_excerpt_font_size'].'px;">';
-					echo '<a style="text-decoration:none; color:#111111;" href="';
+					echo '<a style="text-decoration:none;" href="';
 					echo get_permalink($featuredPost->ID);//the_permalink();
 					echo '"><p>';
 					echo $featuredPost->post_excerpt;
@@ -153,41 +157,45 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			if($vrpOptions['featured_tag'] != '') $temp_height = intval($vrpOptions['featured_image_height']) + 37;
 			else $temp_height = intval($vrpOptions['featured_image_height']) + 17;
 			echo $temp_height.'px;';
-			/*if(intval($vrpOptions['box_height']) > (intval($vrpOptions['image_height'])+17).'px;') {
-				echo intval($vrpOptions['box_height']).'px;';
-			} else {
-				echo (intval($vrpOptions['image_height']) + 17).'px;';
-			}*/
+			if($vrpOptions['box_background_color'] != '') {
+				echo 'background:#'.$vrpOptions['box_background_color'].';';
+			}
 			echo '">';
 			
 			
 			if($vrpOptions['featured_tag'] != '') {
-				echo '<div id="featured_tag" style="padding:5px 5px 0px 10px;">';
+				echo '<div id="featured_tag" style="padding:5px 5px 0px 10px;';
+				if($vrpOptions['featured_tag_font_size'] != '') {
+					echo 'font-size:'.$vrpOptions['featured_tag_font_size'].'px;';
+				}
+				echo '">';
 				echo '<p>'.$vrpOptions['featured_tag'].'</p>';
 				echo '</div>';
 			}
 			
 			echo '<a href="';
 			echo get_permalink($featuredPost->ID);//the_permalink();
-			echo '">';
-			
+			echo '" class="info">';
+			echo '<span>';
+			the_excerpt();
+			echo '</span>';
 		 	echo image_extractor($resize = true, $resize_type = 1, $width = intval($vrpOptions['featured_image_width']), $height = intval($vrpOptions['featured_image_height']), $class = 'vrp_img_mag', $id = '', $prefix='', $suffix='', $post=$featuredPost);
 			echo '</a>';
 			
 			if($vrpOptions['featured_include_title'] == 'true') {
-				echo '<div id="vrp_title_caption_mag"><h2><a style="';
+				echo '<div id="vrp_title_caption_mag"><h3><a style="';
 				echo ' font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
 				echo get_permalink($featuredPost->ID);
 				echo '">';
 				echo $featuredPost->post_title;//the_title();
-				echo '</a></h2></div>';
+				echo '</a></h3></div>';
 			} else {
 				echo '<div style="padding-top:10px;"></div>';
 			}
 			
 			if($vrpOptions['featured_include_excerpt'] == 'true') {
 				echo '<div id="vrp_excerpt_mag" style="padding-top:0px; font-size:'.$vrpOptions['featured_excerpt_font_size'].'px;">';
-				echo '<a style="text-decoration:none; color:#111111;" href="';
+				echo '<a style="text-decoration:none;" href="';
 				echo get_permalink($featuredPost->ID);
 				echo '">';
 				echo $featuredPost->post_excerpt;//the_excerpt();
@@ -205,15 +213,16 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				$vrp_h3_first_letter = $vrpOptions['custom_heading_code'][0];
 				$vrp_h3_the_rest = substr($vrpOptions['custom_heading_code'], 1);;
 			}
-			echo '<div id="vrp_box" style="margin-top:'.$vrpOptions['top_margin'].'px;margin-right:'.$vrpOptions['right_margin'].'px;
+			echo '<div id="vrp_box" class="custom" style="margin-top:'.$vrpOptions['top_margin'].'px;margin-right:'.$vrpOptions['right_margin'].'px;
 			margin-bottom:'.$vrpOptions['bottom_margin'].'px;margin-left:'.$vrpOptions['left_margin'].'px;">';
 			if(!$vrpOptions['custom_heading_code'] == '') {
-				echo '<h3 id="vrp_h3" style="margin-top:0px; font-size:'.$vrpOptions['header_text_font_size'].'px;"><span class="h3_drop_cap">'.$vrp_h3_first_letter.'</span>'.$vrp_h3_the_rest.'</h3>';
+				echo '<h3 id="vrp_h3" style="font-size:'.$vrpOptions['header_text_font_size'].'px;"><span class="h3_drop_cap">'.$vrp_h3_first_letter.'</span>'.$vrp_h3_the_rest.'</h3>';
 			}
 			
 			$vrp_counter = 0;
 			global $post;
-			$myposts = get_posts('numberposts='.$vrpOptions['number_of_posts'].'&offset='.$vrpOptions['offset'].'&category='.$vrpOptions['category']);
+			//$myposts = get_posts('numberposts='.$vrpOptions['number_of_posts'].'&offset='.$vrpOptions['offset'].'&category='.$vrpOptions['category']);
+			$myposts = $this->vrp_get_posts($vrpOptions);
 			if($vrpOptions['number_of_posts'] == '0') {
 				$vrp_no_posts = 'true';
 			} else $vrp_no_posts = 'false';
@@ -232,23 +241,26 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						if($vrpOptions['featured_layout'] == 'horizontal') $this->drawFeatured_horizontal($vrpOptions, $post);
 					}
 				}
-				$hasimagestuff = 'true';
+				/*$hasimagestuff = 'true';
 				if($vrpOptions['only_posts_with_images'] == 'true' && !$this->vrp_has_image($post)) {
 					$hasimagestuff = 'false';
-				} 
+				}*/
 				
-				if($go_on == 'true' && $vrp_no_posts == 'false' && $hasimagestuff == 'true') {
+				if($go_on == 'true' && $vrp_no_posts == 'false') {
 					echo '<div id="vrp_image_box" style="width:';
-					if(intval($vrpOptions['box_width']) > (intval($vrpOptions['image_width'])+17)) {
+					if(intval($vrpOptions['box_width']) > (intval($vrpOptions['image_width']))) {
 						echo intval($vrpOptions['box_width']).'px;';
 					} else {
-						echo (intval($vrpOptions['image_width']) + 17).'px;';
+						echo (intval($vrpOptions['image_width'])).'px;';
 					}
 					if(!$vrpOptions['box_height'] == '') {
 						echo 'height:'.intval($vrpOptions['box_height']).'px;';
 					}
 					if($vrpOptions['float_left'] == 'true') {
 						echo ' float:left;';
+					}
+					if($vrpOptions['box_background_color'] != '') {
+						echo 'background:#'.$vrpOptions['box_background_color'].';';
 					}
 					echo '">';
 				
@@ -259,25 +271,32 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						echo the_title();
 						echo '</a></h3></div>';
 					} else {
-						echo '<div style="padding-top:10px;"></div>';
+						//echo '<div></div>';
 					}
 				
 					echo '<a href="';
 					echo the_permalink();
-					echo '">';
+					echo '" class="info">';
+					if($vrpOptions['display_popups'] == 'true') {
+						echo '<span><p class="pop_title">';
+						the_title();
+						echo '</p>';
+						the_excerpt();
+						echo '</span>';
+					}
 				 	echo image_extractor($resize = true, $resize_type = 1, $width = intval($vrpOptions['image_width']), $height = intval($vrpOptions['image_height']), $class = 'vrp_img', $id = '', $prefix='', $suffix='', $post=$post);
 					echo '</a>';
 				
 					if($vrpOptions['include_post_excerpt'] == 'true') {
-						echo '<div id="vrp_excerpt" style="padding-top:0px; font-size:'.$vrpOptions['excerpt_font_size'].'px;">';
-						echo '<a style="text-decoration:none; color:#111111;" href="';
+						echo '<div id="vrp_excerpt" style="font-size:'.$vrpOptions['excerpt_font_size'].'px;">';
+						echo '<a href="';
 						echo the_permalink();
 						echo '">';
 						the_excerpt();
 						echo '</a>';
 						echo '</div>';
 					} else {
-						echo '<div style="padding-top:7px;"></div>';
+						//echo '<div style="padding-top:7px;"></div>';
 					}
 				
 					echo '</div>';
@@ -291,16 +310,17 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				$vrp_h3_first_letter = $vrpOptions['custom_heading_code'][0];
 				$vrp_h3_the_rest = substr($vrpOptions['custom_heading_code'], 1);;
 			}
-			echo '<div id="vrp_box" style="margin-top:'.$vrpOptions['top_margin'].'px;margin-right:'.$vrpOptions['right_margin'].'px;
+			echo '<div id="vrp_box" class="custom" style="margin-top:'.$vrpOptions['top_margin'].'px;margin-right:'.$vrpOptions['right_margin'].'px;
 			margin-bottom:'.$vrpOptions['bottom_margin'].'px;margin-left:'.$vrpOptions['left_margin'].'px;">';
 			if(!$vrpOptions['custom_heading_code'] == '') {
-				echo '<h3 id="vrp_h3" style="margin-top:0px; font-size:'.$vrpOptions['header_text_font_size'].'px;"><span class="h3_drop_cap">'.$vrp_h3_first_letter.'</span>'.$vrp_h3_the_rest.'</h3>';
+				echo '<h3 id="vrp_h3" style="font-size:'.$vrpOptions['header_text_font_size'].'px;"><span class="h3_drop_cap">'.$vrp_h3_first_letter.'</span>'.$vrp_h3_the_rest.'</h3>';
 			}
 			
 
 			$vrp_counter = 0;
 			global $post;
-			$myposts = get_posts('numberposts='.$vrpOptions['number_of_posts'].'&offset='.$vrpOptions['offset'].'&category='.$vrpOptions['category']);
+			//$myposts = get_posts('numberposts='.$vrpOptions['number_of_posts'].'&offset='.$vrpOptions['offset'].'&category='.$vrpOptions['category']);
+			$myposts = $this->vrp_get_posts($vrpOptions);
 			if($vrpOptions['number_of_posts'] == '0') {
 				$vrp_no_posts = 'true';
 			} else $vrp_no_posts = 'false';
@@ -320,34 +340,41 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 					}
 				}
 				
-				$hasimagestuff = 'true';
+				/*$hasimagestuff = 'true';
 				if($vrpOptions['only_posts_with_images'] == 'true' && !$this->vrp_has_image($post)) {
 					$hasimagestuff = 'false';
-				} 
-				if($go_on == 'true' && $vrp_no_posts == 'false' && $hasimagestuff == 'true') {
+				} */
+				if($go_on == 'true' && $vrp_no_posts == 'false') {
 					echo '<div id="vrp_image_box" style="width:';
-					if(intval($vrpOptions['box_width']) > (intval($vrpOptions['image_width'])+17)) {
+					if(intval($vrpOptions['box_width']) > (intval($vrpOptions['image_width']))) {
 						echo intval($vrpOptions['box_width']).'px;';
 					} else {
-						echo (intval($vrpOptions['image_width']) + 17).'px;';
+						echo (intval($vrpOptions['image_width'])).'px;';
 					}
 					if($vrpOptions['float_left'] == 'true') {
 						echo ' float:left;';
 					}
 					echo 'height:';
-					if(intval($vrpOptions['box_height']) > (intval($vrpOptions['image_height'])+17)) {
+					if(intval($vrpOptions['box_height']) > (intval($vrpOptions['image_height']))) {
 						echo intval($vrpOptions['box_height']).'px;';
 					} else {
-						echo (intval($vrpOptions['image_height']) + 17).'px;';
+						echo (intval($vrpOptions['image_height'])).'px;';
 					}
-					//if($vrpOptions['include_post_excerpt'] == 'false') {
-					//echo 'height:'.(intval($vrpOptions['image_height']) + 17).'px;';
-					//}
+					if($vrpOptions['box_background_color'] != '') {
+						echo 'background:#'.$vrpOptions['box_background_color'].';';
+					}
 					echo '">';
 				
 					echo '<a href="';
 					echo the_permalink();
-					echo '">';
+					echo '" class="info">';
+					if($vrpOptions['display_popups'] == 'true') {
+						echo '<span><p class="pop_title">';
+						the_title();
+						echo '</p>';
+						the_excerpt();
+						echo '</span>';
+					}
 				 	echo image_extractor($resize = true, $resize_type = 1, $width = intval($vrpOptions['image_width']), $height = intval($vrpOptions['image_height']), $class = 'vrp_img_mag', $id = '', $prefix='', $suffix='', $post=$post);
 					echo '</a>';
 				
@@ -359,12 +386,12 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						echo the_title();
 						echo '</a></h3></div>';
 					} else {
-						echo '<div style="padding-top:10px;"></div>';
+						//echo '<div style="padding-top:10px;"></div>';
 					}
 				
 					if($vrpOptions['include_post_excerpt'] == 'true') {
-						echo '<div id="vrp_excerpt_mag" style="padding-top:0px; font-size:'.$vrpOptions['excerpt_font_size'].'px;">';
-						echo '<a style="text-decoration:none; color:#111111;" href="';
+						echo '<div id="vrp_excerpt_mag" style="font-size:'.$vrpOptions['excerpt_font_size'].'px;">';
+						echo '<a style="text-decoration:none;" href="';
 						echo the_permalink();
 						echo '">';
 						the_excerpt();
@@ -378,6 +405,28 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				}
  			endforeach;
 			echo '</div>';
+		}
+
+		function vrp_get_posts($vrpOptions) {
+			$temp_offset = $vrpOptions['offset'];
+			$temp_num_posts = 0;
+			$return_posts = array();
+			while($temp_num_posts < $vrpOptions['number_of_posts']) {
+				$temp_post = get_posts('numberposts=1&offset='.$temp_offset.'&category='.$vrpOptions['category']);
+				if($vrpOptions['only_posts_with_image'] == 'true') {
+					if($this->vrp_has_image($temp_post[0])) {
+						array_push($return_posts, $temp_post[0]);
+						$temp_offset = $temp_offset + 1;
+						$temp_num_posts = $temp_num_posts + 1;
+					}
+				} else {
+					array_push($return_posts, $temp_post[0]);
+					$temp_offset = $temp_offset + 1;
+					$temp_num_posts = $temp_num_posts + 1;
+				}
+			}
+			
+			return $return_posts;
 		}
 
 		function vrp_has_image($vrp_post) { 
@@ -504,6 +553,15 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						if (isset($_POST['vrp_category'])) {
 							$vrpOptions['category'] = $_POST['vrp_category'];
 						}
+						if (isset($_POST['vrp_featured_tag_font_size'])) {
+							$vrpOptions['featured_tag_font_size'] = $_POST['vrp_featured_tag_font_size'];
+						}
+						if (isset($_POST['vrp_box_background_color'])) {
+							$vrpOptions['box_background_color'] = $_POST['vrp_box_background_color'];
+						}
+						if (isset($_POST['vrp_display_popups'])) {
+							$vrpOptions['display_popups'] = $_POST['vrp_display_popups'];
+						}
 					
 						update_option($this->adminOptionsName, $vrpOptions);
 						
@@ -567,6 +625,11 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <label for="only_posts_with_images_yes"><input type="radio" id="only_posts_with_images_yes" name="vrp_only_posts_with_images" value="true" <?php if ($vrpOptions['only_posts_with_images'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
 <label for="only_posts_with_images_no"><input type="radio" id="only_posts_with_images_no" name="vrp_only_posts_with_images" value="false" <?php if ($vrpOptions['only_posts_with_images'] == "false") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?>/> No</label>
 
+<h3>Include CSS Popups</h3>
+<p>When the mouse hovers over an image, a box pops up that includes the post title and excerpt that belong to that image. Note: This does not apply to the featured post. Sorry.</p>
+<label for="display_popups_yes"><input type="radio" id="display_popups_yes" name="vrp_display_popups" value="true" <?php if ($vrpOptions['display_popups'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label for="display_popups_no"><input type="radio" id="display_popups_no" name="vrp_display_popups" value="false" <?php if ($vrpOptions['display_popups'] == "false") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?>/> No</label>
+
 <h3>Layout Option</h3>
 <p>Currently, there are two layout options: horizontal and vertical. Vertical puts the title above the image and the excerpt below it. The horizontal layout puts the title and excerpt to the right of the image. (Hint: You'll probably want to set the 'Box Width' below if you choose to do a horizontal layout.)</p>
 <label for="layout_option_vertical"><input type="radio" id="layout_option_vertical" name="vrp_layout_option" value="vertical" <?php if ($vrpOptions['layout_option'] == "vertical") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Vertical</label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -619,6 +682,10 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <p>This controls the width of each individual VRP box. If left blank, the width of your post box height will be set to the width of your image. If you're using a horizontal layout, you'll want to set this value for sure.</p>
 <input type="text" name="vrp_box_width" value="<?php _e($vrpOptions['box_width'], 'VisualRecentPostsPlugin') ?>"></input>
 
+<h3>Box Background Color</h3>
+<p>This controls the background color of your VRP image box thingy... Anyway, it's a hex value, like ffffff for white or 000000 for black.</p>
+<input type="text" name="vrp_box_background_color" value="<?php _e($vrpOptions['box_background_color'], 'VisualRecentPostsPlugin') ?>"></input>
+
 <h2>Featured Post</h2>
 <h3>Include Featured Post</h3>
 <label for="include_featured_yes"><input type="radio" id="include_featured_yes" name="vrp_include_featured" value="true" <?php if ($vrpOptions['include_featured'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -666,6 +733,9 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <p>This is a little bit of text displayed at the top left corner of the featured post box. It could be something original like 'Featured Post!'</p>
 <input type="text" name="vrp_featured_tag" value="<?php _e($vrpOptions['featured_tag'], 'VisualRecentPostsPlugin') ?>"></input>
 
+<h3>Featured Tag Font Size</h3>
+<input type="text" name="vrp_featured_tag_font_size" value="<?php _e($vrpOptions['featured_tag_font_size'], 'VisualRecentPostsPlugin') ?>"></input>
+
 <div class="submit">
 <input type="submit" name="update_VisualRecentPostsPluginSettings" value="<?php _e('Update Settings', 'VisualRecentPostsPlugin') ?>" /></div>
 </form>
@@ -703,13 +773,8 @@ if (isset($dl_pluginVRP)) {
 	add_action('wp_head', array(&$dl_pluginVRP, 'uploadVRPCSS'));
 	
 	if (!$dl_pluginVRP->getVrpLocationHook() == '') {
-		//add_action('wp_head', array(&$dl_pluginVRP, 'uploadVRPCSS'));
 		add_action($dl_pluginVRP->getVrpLocationHook(), array(&$dl_pluginVRP,'addVRP'), 1);
 	}
-	
-	//Filters
-	//add_filter('the_content', array(&$dl_pluginVRP, 'addContent'),1); 
-	//add_filter('get_comment_author', array(&$dl_pluginVRP, 'authorUpperCase'));
 }
 
 function insertVisualRecentPosts($category = '', $include_featured_post = '', $number_of_posts = '') {
