@@ -4,13 +4,11 @@ Tags: recent posts, magazine, thumbnails, featured post, images, posts
 Donate link: http://oktober5.com/donate/
 Requires at least: 2.5
 Tested up to: 2.7
-Stable tag: 1.2
+Stable tag: 1.2.1
 
 Displays your recent posts with auto-generated thumbnails and excerpts; also includes a featured post and popup box option.
 
 == Description ==
-
-<p>WordPress's download is about as reliable as a constipated hippo, so here's a download link from my site: <a href="http://oktober5.com/wp-content/downloads/visual-recent-posts.zip">VRP Plugin Download</a>.</p>
 
 <p>This plugin gives the look of a magazine-style website with thumbnails and excerpts in a clean layout. Thumbnails are generated automatically, and there is a settings page to set an unholy amount of options. (Really, it's out of control and I'm sorry.) The latest release also has a "featured post" add-on so you can specify any post you want or just the most recent one to be put in the featured post box. You can also add a css popup for the image that includes the post title and </p>
 
@@ -59,6 +57,8 @@ v1.1.3 - Added parameter to insertVisualRecentPosts() function. You can now pass
 v1.1.4 - Added more style options, like changing font sizes and background colors; also, I removed some hard-coded styles so that you may set them yourself in the css file. Hope that doesn't break things....
 
 v1.2 - Added CSS popup boxes; fixed number of posts with images issue thingy; took out hard coded margins, padding, colors, etc., so that you can make your own changes, although this makes things look ugly initially; upped the thumbnail image quality to 85%
+
+v1.2.1 - Yes, another release... Fixed a bug that I created in the last release. When you specify a number of posts and say images only, it should give you that many posts with images, assuming you have that many. If you don't have that many, it will return what it can find. 
 
 
 

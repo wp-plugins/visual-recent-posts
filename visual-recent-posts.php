@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin name: Visual Recent Posts
-Version: 1.2
+Version: 1.2.1
 Plugin URI: http://oktober5.com/visual-recent-posts-plugin/
 Description: Visually represents your most recent posts by extracting the first image from each post and displaying it along with the post title and excerpt.
 Author: Ryan Scott
@@ -413,16 +413,20 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			$return_posts = array();
 			while($temp_num_posts < $vrpOptions['number_of_posts']) {
 				$temp_post = get_posts('numberposts=1&offset='.$temp_offset.'&category='.$vrpOptions['category']);
-				if($vrpOptions['only_posts_with_image'] == 'true') {
+				if($temp_post[0] == '') return $return_posts;
+				if($vrpOptions['only_posts_with_images'] == 'true') {
 					if($this->vrp_has_image($temp_post[0])) {
 						array_push($return_posts, $temp_post[0]);
 						$temp_offset = $temp_offset + 1;
 						$temp_num_posts = $temp_num_posts + 1;
+					} else {
+						$temp_offset = $temp_offset + 1;
 					}
 				} else {
 					array_push($return_posts, $temp_post[0]);
 					$temp_offset = $temp_offset + 1;
 					$temp_num_posts = $temp_num_posts + 1;
+					echo 'adding non-image';
 				}
 			}
 			
