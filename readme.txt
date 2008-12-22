@@ -4,7 +4,7 @@ Tags: recent posts, magazine, thumbnails, featured post, images, posts
 Donate link: http://oktober5.com/donate/
 Requires at least: 2.5
 Tested up to: 2.7
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 
 Displays your recent posts with auto-generated thumbnails and excerpts; also includes a featured post and popup box option.
 
@@ -59,6 +59,8 @@ v1.1.4 - Added more style options, like changing font sizes and background color
 v1.2 - Added CSS popup boxes; fixed number of posts with images issue thingy; took out hard coded margins, padding, colors, etc., so that you can make your own changes, although this makes things look ugly initially; upped the thumbnail image quality to 85%
 
 v1.2.1 - Yes, another release... Fixed a bug that I created in the last release. When you specify a number of posts and say images only, it should give you that many posts with images, assuming you have that many. If you don't have that many, it will return what it can find. 
+
+v1.2.2 - Afraid of CSS? This version adds padding options for image box, title, and excerpt. It also fixes the problem where each CSS popup excerpt is the same.
 
 
 

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin name: Visual Recent Posts
-Version: 1.2.1
+Version: 1.2.2
 Plugin URI: http://oktober5.com/visual-recent-posts-plugin/
 Description: Visually represents your most recent posts by extracting the first image from each post and displaying it along with the post title and excerpt.
 Author: Ryan Scott
@@ -47,7 +47,16 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				'featured_box_width' => '', 'featured_post_id' => '', 'featured_image_width' => '400', 'featured_image_height' => '200',
 				'featured_include_excerpt' => 'true', 'featured_include_title' => 'true', 'featured_title_font_size' => '18',
 				'featured_excerpt_font_size' => '14', 'featured_tag' => '', 'only_posts_with_images' => 'false', 'category' => '',
-				'featured_tag_font_size' => '12', 'box_background_color' => 'efefef', 'display_popups' => 'false');
+				'featured_tag_font_size' => '12', 'box_background_color' => 'efefef', 'display_popups' => 'false',
+				
+				'image_box_ptop' => '', 'image_box_pright' => '', 'image_box_pbottom' => '', 'image_box_pleft' => '',
+				'post_title_ptop' => '', 'post_title_pright' => '', 'post_title_pbottom' => '', 'post_title_pleft' => '',
+				'excerpt_ptop' => '', 'excerpt_pright' => '', 'excerpt_pbottom' => '', 'excerpt_pleft' => '',
+				
+				'fimage_box_ptop' => '', 'fimage_box_pright' => '', 'fimage_box_pbottom' => '', 'fimage_box_pleft' => '',
+				'fpost_title_ptop' => '', 'fpost_title_pright' => '', 'fpost_title_pbottom' => '', 'fpost_title_pleft' => '',
+				'fexcerpt_ptop' => '', 'fexcerpt_pright' => '', 'fexcerpt_pbottom' => '', 'fexcerpt_pleft' => ''
+				);
 			return $vrp_AdminOptions;
 		}
 		
@@ -107,10 +116,23 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				if($vrpOptions['box_background_color'] != '') {
 					echo 'background:#'.$vrpOptions['box_background_color'].';';
 				}
+				
+				if($vrpOptions['fimage_box_ptop'] != '') {echo 'padding-top:'.$vrpOptions['fimage_box_ptop'].'px;';}
+				if($vrpOptions['fimage_box_pright'] != '') {echo 'padding-right:'.$vrpOptions['fimage_box_pright'].'px;';}
+				if($vrpOptions['fimage_box_pbottom'] != '') {echo 'padding-bottom:'.$vrpOptions['fimage_box_pbottom'].'px;';}
+				if($vrpOptions['fimage_box_pleft'] != '') {echo 'padding-left:'.$vrpOptions['fimage_box_pleft'].'px;';}
+				
 				echo '">';
 				
 				if($vrpOptions['featured_include_title'] == 'true') {
-					echo '<div id="vrp_title_caption"><h3><a style=" font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
+					echo '<div id="vrp_title_caption" style="';
+					
+					if($vrpOptions['fpost_title_ptop'] != '') echo 'padding-top:'.$vrpOptions['fpost_title_ptop'].'px;';
+					if($vrpOptions['fpost_title_pright'] != '') echo 'padding-right:'.$vrpOptions['fpost_title_pright'].'px;';
+					if($vrpOptions['fpost_title_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['fpost_title_pbottom'].'px;';
+					if($vrpOptions['fpost_title_pleft'] != '') echo 'padding-left:'.$vrpOptions['fpost_title_pleft'].'px;';
+					
+					echo '"><h3><a style=" font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
 					echo get_permalink($featuredPost->ID);//the_permalink();
 					echo '">';
 					echo $featuredPost->post_title;
@@ -129,7 +151,14 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 				echo '</a>';
 				
 				if($vrpOptions['featured_include_excerpt'] == 'true') {
-					echo '<div id="vrp_excerpt" style="padding-top:0px; font-size:'.$vrpOptions['featured_excerpt_font_size'].'px;">';
+					echo '<div id="vrp_excerpt" style="padding-top:0px; font-size:'.$vrpOptions['featured_excerpt_font_size'].'px;';
+					
+					if($vrpOptions['fexcerpt_ptop'] != '') echo 'padding-top:'.$vrpOptions['fexcerpt_ptop'].'px;';
+					if($vrpOptions['fexcerpt_pright'] != '') echo 'padding-right:'.$vrpOptions['fexcerpt_pright'].'px;';
+					if($vrpOptions['fexcerpt_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['fexcerpt_pbottom'].'px;';
+					if($vrpOptions['fexcerpt_pleft'] != '') echo 'padding-left:'.$vrpOptions['fexcerpt_pleft'].'px;';
+					
+					echo '">';
 					echo '<a style="text-decoration:none;" href="';
 					echo get_permalink($featuredPost->ID);//the_permalink();
 					echo '"><p>';
@@ -160,6 +189,12 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			if($vrpOptions['box_background_color'] != '') {
 				echo 'background:#'.$vrpOptions['box_background_color'].';';
 			}
+			
+			if($vrpOptions['fimage_box_ptop'] != '') {echo 'padding-top:'.$vrpOptions['fimage_box_ptop'].'px;';}
+			if($vrpOptions['fimage_box_pright'] != '') {echo 'padding-right:'.$vrpOptions['fimage_box_pright'].'px;';}
+			if($vrpOptions['fimage_box_pbottom'] != '') {echo 'padding-bottom:'.$vrpOptions['fimage_box_pbottom'].'px;';}
+			if($vrpOptions['fimage_box_pleft'] != '') {echo 'padding-left:'.$vrpOptions['fimage_box_pleft'].'px;';}
+			
 			echo '">';
 			
 			
@@ -183,7 +218,14 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			echo '</a>';
 			
 			if($vrpOptions['featured_include_title'] == 'true') {
-				echo '<div id="vrp_title_caption_mag"><h3><a style="';
+				echo '<div id="vrp_title_caption_mag" style="';
+				
+				if($vrpOptions['fpost_title_ptop'] != '') echo 'padding-top:'.$vrpOptions['fpost_title_ptop'].'px;';
+				if($vrpOptions['fpost_title_pright'] != '') echo 'padding-right:'.$vrpOptions['fpost_title_pright'].'px;';
+				if($vrpOptions['fpost_title_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['fpost_title_pbottom'].'px;';
+				if($vrpOptions['fpost_title_pleft'] != '') echo 'padding-left:'.$vrpOptions['fpost_title_pleft'].'px;';
+				
+				echo '"><h3><a style="';
 				echo ' font-size:'.$vrpOptions['featured_title_font_size'].'px;" href="';
 				echo get_permalink($featuredPost->ID);
 				echo '">';
@@ -194,7 +236,14 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 			}
 			
 			if($vrpOptions['featured_include_excerpt'] == 'true') {
-				echo '<div id="vrp_excerpt_mag" style="padding-top:0px; font-size:'.$vrpOptions['featured_excerpt_font_size'].'px;">';
+				echo '<div id="vrp_excerpt_mag" style="padding-top:0px; font-size:'.$vrpOptions['featured_excerpt_font_size'].'px;';
+				
+				if($vrpOptions['fexcerpt_ptop'] != '') echo 'padding-top:'.$vrpOptions['fexcerpt_ptop'].'px;';
+				if($vrpOptions['fexcerpt_pright'] != '') echo 'padding-right:'.$vrpOptions['fexcerpt_pright'].'px;';
+				if($vrpOptions['fexcerpt_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['fexcerpt_pbottom'].'px;';
+				if($vrpOptions['fexcerpt_pleft'] != '') echo 'padding-left:'.$vrpOptions['fexcerpt_pleft'].'px;';
+				
+				echo '">';
 				echo '<a style="text-decoration:none;" href="';
 				echo get_permalink($featuredPost->ID);
 				echo '">';
@@ -241,10 +290,6 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						if($vrpOptions['featured_layout'] == 'horizontal') $this->drawFeatured_horizontal($vrpOptions, $post);
 					}
 				}
-				/*$hasimagestuff = 'true';
-				if($vrpOptions['only_posts_with_images'] == 'true' && !$this->vrp_has_image($post)) {
-					$hasimagestuff = 'false';
-				}*/
 				
 				if($go_on == 'true' && $vrp_no_posts == 'false') {
 					echo '<div id="vrp_image_box" style="width:';
@@ -262,10 +307,23 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 					if($vrpOptions['box_background_color'] != '') {
 						echo 'background:#'.$vrpOptions['box_background_color'].';';
 					}
+					if($vrpOptions['image_box_ptop'] != '') {echo 'padding-top:'.$vrpOptions['image_box_ptop'].'px;';}
+					if($vrpOptions['image_box_pright'] != '') {echo 'padding-right:'.$vrpOptions['image_box_pright'].'px;';}
+					if($vrpOptions['image_box_pbottom'] != '') {echo 'padding-bottom:'.$vrpOptions['image_box_pbottom'].'px;';}
+					if($vrpOptions['image_box_pleft'] != '') {echo 'padding-left:'.$vrpOptions['image_box_pleft'].'px;';}
+					
 					echo '">';
 				
 					if($vrpOptions['include_post_title'] == 'true') {
-						echo '<div id="vrp_title_caption"><h3><a style=" font-size:'.$vrpOptions['title_caption_font_size'].'px;" href="';
+						echo '<div id="vrp_title_caption" style="';
+					
+						if($vrpOptions['post_title_ptop'] != '') echo 'padding-top:'.$vrpOptions['post_title_ptop'].'px;';
+						if($vrpOptions['post_title_pright'] != '') echo 'padding-right:'.$vrpOptions['post_title_pright'].'px;';
+						if($vrpOptions['post_title_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['post_title_pbottom'].'px;';
+						if($vrpOptions['post_title_pleft'] != '') echo 'padding-left:'.$vrpOptions['post_title_pleft'].'px;';
+						
+						echo '"><h3><a style=" font-size:'.$vrpOptions['title_caption_font_size'].'px;';
+						echo '" href="';
 						echo the_permalink();
 						echo '">';
 						echo the_title();
@@ -279,16 +337,23 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 					echo '" class="info">';
 					if($vrpOptions['display_popups'] == 'true') {
 						echo '<span><p class="pop_title">';
-						the_title();
+						echo $post->post_title;
 						echo '</p>';
-						the_excerpt();
+						echo $post->post_excerpt;
 						echo '</span>';
 					}
 				 	echo image_extractor($resize = true, $resize_type = 1, $width = intval($vrpOptions['image_width']), $height = intval($vrpOptions['image_height']), $class = 'vrp_img', $id = '', $prefix='', $suffix='', $post=$post);
 					echo '</a>';
 				
 					if($vrpOptions['include_post_excerpt'] == 'true') {
-						echo '<div id="vrp_excerpt" style="font-size:'.$vrpOptions['excerpt_font_size'].'px;">';
+						echo '<div id="vrp_excerpt" style="font-size:'.$vrpOptions['excerpt_font_size'].'px;';
+						
+						if($vrpOptions['excerpt_ptop'] != '') echo 'padding-top:'.$vrpOptions['excerpt_ptop'].'px;';
+						if($vrpOptions['excerpt_pright'] != '') echo 'padding-right:'.$vrpOptions['excerpt_pright'].'px;';
+						if($vrpOptions['excerpt_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['excerpt_pbottom'].'px;';
+						if($vrpOptions['excerpt_pleft'] != '') echo 'padding-left:'.$vrpOptions['excerpt_pleft'].'px;';
+						
+						echo '">';
 						echo '<a href="';
 						echo the_permalink();
 						echo '">';
@@ -340,10 +405,6 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 					}
 				}
 				
-				/*$hasimagestuff = 'true';
-				if($vrpOptions['only_posts_with_images'] == 'true' && !$this->vrp_has_image($post)) {
-					$hasimagestuff = 'false';
-				} */
 				if($go_on == 'true' && $vrp_no_posts == 'false') {
 					echo '<div id="vrp_image_box" style="width:';
 					if(intval($vrpOptions['box_width']) > (intval($vrpOptions['image_width']))) {
@@ -363,6 +424,10 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 					if($vrpOptions['box_background_color'] != '') {
 						echo 'background:#'.$vrpOptions['box_background_color'].';';
 					}
+					if($vrpOptions['image_box_ptop'] != '') echo 'padding-top:'.$vrpOptions['image_box_ptop'].'px;';
+					if($vrpOptions['image_box_pright'] != '') echo 'padding-right:'.$vrpOptions['image_box_pright'].'px;';
+					if($vrpOptions['image_box_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['image_box_pbottom'].'px;';
+					if($vrpOptions['image_box_pleft'] != '') echo 'padding-left:'.$vrpOptions['image_box_pleft'].'px;';
 					echo '">';
 				
 					echo '<a href="';
@@ -370,16 +435,23 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 					echo '" class="info">';
 					if($vrpOptions['display_popups'] == 'true') {
 						echo '<span><p class="pop_title">';
-						the_title();
+						echo $post->post_title;
 						echo '</p>';
-						the_excerpt();
+						echo $post->post_excerpt;
 						echo '</span>';
 					}
 				 	echo image_extractor($resize = true, $resize_type = 1, $width = intval($vrpOptions['image_width']), $height = intval($vrpOptions['image_height']), $class = 'vrp_img_mag', $id = '', $prefix='', $suffix='', $post=$post);
 					echo '</a>';
 				
 					if($vrpOptions['include_post_title'] == 'true') {
-						echo '<div id="vrp_title_caption_mag"><h3><a style="';
+						echo '<div id="vrp_title_caption_mag" style="';
+						
+						if($vrpOptions['post_title_ptop'] != '') echo 'padding-top:'.$vrpOptions['post_title_ptop'].'px;';
+						if($vrpOptions['post_title_pright'] != '') echo 'padding-right:'.$vrpOptions['post_title_pright'].'px;';
+						if($vrpOptions['post_title_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['post_title_pbottom'].'px;';
+						if($vrpOptions['post_title_pleft'] != '') echo 'padding-left:'.$vrpOptions['post_title_pleft'].'px;';
+						
+						echo'"><h3><a style="';
 						echo ' font-size:'.$vrpOptions['title_caption_font_size'].'px;" href="';
 						echo the_permalink();
 						echo '">';
@@ -390,7 +462,14 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 					}
 				
 					if($vrpOptions['include_post_excerpt'] == 'true') {
-						echo '<div id="vrp_excerpt_mag" style="font-size:'.$vrpOptions['excerpt_font_size'].'px;">';
+						echo '<div id="vrp_excerpt_mag" style="font-size:'.$vrpOptions['excerpt_font_size'].'px; ';
+						
+						if($vrpOptions['excerpt_ptop'] != '') echo 'padding-top:'.$vrpOptions['excerpt_ptop'].'px;';
+						if($vrpOptions['excerpt_pright'] != '') echo 'padding-right:'.$vrpOptions['excerpt_pright'].'px;';
+						if($vrpOptions['excerpt_pbottom'] != '') echo 'padding-bottom:'.$vrpOptions['excerpt_pbottom'].'px;';
+						if($vrpOptions['excerpt_pleft'] != '') echo 'padding-left:'.$vrpOptions['excerpt_pleft'].'px;';
+						
+						echo '">';
 						echo '<a style="text-decoration:none;" href="';
 						echo the_permalink();
 						echo '">';
@@ -426,7 +505,6 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 					array_push($return_posts, $temp_post[0]);
 					$temp_offset = $temp_offset + 1;
 					$temp_num_posts = $temp_num_posts + 1;
-					echo 'adding non-image';
 				}
 			}
 			
@@ -566,6 +644,86 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 						if (isset($_POST['vrp_display_popups'])) {
 							$vrpOptions['display_popups'] = $_POST['vrp_display_popups'];
 						}
+						
+						/*VRP Image Box padding stuff*/
+						if (isset($_POST['vrp_image_box_ptop'])) {
+							$vrpOptions['image_box_ptop'] = $_POST['vrp_image_box_ptop'];
+						}
+						if (isset($_POST['vrp_image_box_pright'])) {
+							$vrpOptions['image_box_pright'] = $_POST['vrp_image_box_pright'];
+						}
+						if (isset($_POST['vrp_image_box_pbottom'])) {
+							$vrpOptions['image_box_pbottom'] = $_POST['vrp_image_box_pbottom'];
+						}
+						if (isset($_POST['vrp_image_box_pleft'])) {
+							$vrpOptions['image_box_pleft'] = $_POST['vrp_image_box_pleft'];
+						}
+						
+						if (isset($_POST['vrp_post_title_ptop'])) {
+							$vrpOptions['post_title_ptop'] = $_POST['vrp_post_title_ptop'];
+						}
+						if (isset($_POST['vrp_post_title_pright'])) {
+							$vrpOptions['post_title_pright'] = $_POST['vrp_post_title_pright'];
+						}
+						if (isset($_POST['vrp_post_title_pbottom'])) {
+							$vrpOptions['post_title_pbottom'] = $_POST['vrp_post_title_pbottom'];
+						}
+						if (isset($_POST['vrp_post_title_pleft'])) {
+							$vrpOptions['post_title_pleft'] = $_POST['vrp_post_title_pleft'];
+						}
+						
+						if (isset($_POST['vrp_excerpt_ptop'])) {
+							$vrpOptions['excerpt_ptop'] = $_POST['vrp_excerpt_ptop'];
+						}
+						if (isset($_POST['vrp_excerpt_pright'])) {
+							$vrpOptions['excerpt_pright'] = $_POST['vrp_excerpt_pright'];
+						}
+						if (isset($_POST['vrp_excerpt_pbottom'])) {
+							$vrpOptions['excerpt_pbottom'] = $_POST['vrp_excerpt_pbottom'];
+						}
+						if (isset($_POST['vrp_excerpt_pleft'])) {
+							$vrpOptions['excerpt_pleft'] = $_POST['vrp_excerpt_pleft'];
+						}
+					
+						/*Featured box padding stuff*/
+						if (isset($_POST['vrp_fimage_box_ptop'])) {
+							$vrpOptions['fimage_box_ptop'] = $_POST['vrp_fimage_box_ptop'];
+						}
+						if (isset($_POST['vrp_fimage_box_pright'])) {
+							$vrpOptions['fimage_box_pright'] = $_POST['vrp_fimage_box_pright'];
+						}
+						if (isset($_POST['vrp_fimage_box_pbottom'])) {
+							$vrpOptions['fimage_box_pbottom'] = $_POST['vrp_fimage_box_pbottom'];
+						}
+						if (isset($_POST['vrp_fimage_box_pleft'])) {
+							$vrpOptions['fimage_box_pleft'] = $_POST['vrp_fimage_box_pleft'];
+						}
+						
+						if (isset($_POST['vrp_fpost_title_ptop'])) {
+							$vrpOptions['fpost_title_ptop'] = $_POST['vrp_fpost_title_ptop'];
+						}
+						if (isset($_POST['vrp_fpost_title_pright'])) {
+							$vrpOptions['fpost_title_pright'] = $_POST['vrp_fpost_title_pright'];
+						}
+						if (isset($_POST['vrp_fpost_title_pbottom'])) {
+							$vrpOptions['fpost_title_pbottom'] = $_POST['vrp_fpost_title_pbottom'];
+						}
+						if (isset($_POST['vrp_fpost_title_pleft'])) {
+							$vrpOptions['fpost_title_pleft'] = $_POST['vrp_fpost_title_pleft'];
+						}
+						
+						if (isset($_POST['vrp_fexcerpt_ptop'])) {
+							$vrpOptions['fexcerpt_ptop'] = $_POST['vrp_fexcerpt_ptop'];
+						}
+						if (isset($_POST['vrp_fexcerpt_pright'])) {
+							$vrpOptions['fexcerpt_pright'] = $_POST['vrp_fexcerpt_pright'];
+						}
+						if (isset($_POST['vrp_fexcerpt_pbottom'])) {
+							$vrpOptions['fexcerpt_pbottom'] = $_POST['vrp_fexcerpt_pbottom'];
+						}
+						if (isset($_POST['vrp_fexcerpt_pleft'])) {
+							$vrpOptions['fexcerpt_pleft'] = $_POST['vrp_fexcerpt_pleft'];
+						}
 					
 						update_option($this->adminOptionsName, $vrpOptions);
 						
@@ -576,7 +734,7 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <div class=wrap>
 <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
 <h2>Visual Recent Posts Plugin</h2>
-
+<p>Note: Any style settings you set in these options will override any settings set in your own stylesheet (CSS) file. To stop that from happening, leave blank those styles that you want to define in your CSS.</p>
 <h3>Custom Header Text</h3>
 <p>If you want to include a heading to your Visual Recent Posts section, do so here.</p>
 <input type="text" name="vrp_custom_heading_code" value="<?php _e($vrpOptions['custom_heading_code'], 'VisualRecentPostsPlugin') ?>"></input>
@@ -620,7 +778,7 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <label for="include_post_title_no"><input type="radio" id="include_post_title_no" name="vrp_include_post_title" value="false" <?php if ($vrpOptions['include_post_title'] == "false") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?>/> No</label>
 
 <h3>Include Post Excerpt</h3>
-<p>This only works if you use the actual excerpt field when you write your post, otherwise you'll get the excerpt of whatever page you're viewing. Stupid, I know, but the geeks at Wordpress assure me that if I understood The Loop things like this could be avoided. The Loop must be some drug they are on. I wonder where they get it . . . .</p>
+<p>This only works if you use the actual excerpt field when you write your post, otherwise you'll get the excerpt of whatever page you're viewing. Stupid, I know, but the geeks at Wordpress assure me that if I understood The Loop things like this could be avoided. The Loop must be some drug they are on. I wonder where they get it....</p>
 <label for="include_post_excerpt_yes"><input type="radio" id="include_post_excerpt_yes" name="vrp_include_post_excerpt" value="true" <?php if ($vrpOptions['include_post_excerpt'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
 <label for="include_post_excerpt_no"><input type="radio" id="include_post_excerpt_no" name="vrp_include_post_excerpt" value="false" <?php if ($vrpOptions['include_post_excerpt'] == "false") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?>/> No</label>
 
@@ -630,7 +788,7 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <label for="only_posts_with_images_no"><input type="radio" id="only_posts_with_images_no" name="vrp_only_posts_with_images" value="false" <?php if ($vrpOptions['only_posts_with_images'] == "false") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?>/> No</label>
 
 <h3>Include CSS Popups</h3>
-<p>When the mouse hovers over an image, a box pops up that includes the post title and excerpt that belong to that image. Note: This does not apply to the featured post. Sorry.</p>
+<p>When the mouse hovers over an image, a box pops up that includes the post title and excerpt that belong to that image. Note: This does not apply to the featured post. Sorry. Also, as noted in the excerpt option above, you must explicitly define an excerpt in the post edit screen in the 'Excerpt' section--this excerpt does not apply to using the more tag.</p>
 <label for="display_popups_yes"><input type="radio" id="display_popups_yes" name="vrp_display_popups" value="true" <?php if ($vrpOptions['display_popups'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
 <label for="display_popups_no"><input type="radio" id="display_popups_no" name="vrp_display_popups" value="false" <?php if ($vrpOptions['display_popups'] == "false") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?>/> No</label>
 
@@ -690,6 +848,39 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 <p>This controls the background color of your VRP image box thingy... Anyway, it's a hex value, like ffffff for white or 000000 for black.</p>
 <input type="text" name="vrp_box_background_color" value="<?php _e($vrpOptions['box_background_color'], 'VisualRecentPostsPlugin') ?>"></input>
 
+<h2>VRP Image Box Padding</h2>
+<p>This is the box where the image thumbnail, title, and excerpt reside.</p>
+<h3>Padding Top</h3>
+<input type="text" name="vrp_image_box_ptop" value="<?php _e($vrpOptions['image_box_ptop'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Right</h3>
+<input type="text" name="vrp_image_box_pright" value="<?php _e($vrpOptions['image_box_pright'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Bottom</h3>
+<input type="text" name="vrp_image_box_pbottom" value="<?php _e($vrpOptions['image_box_pbottom'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Left</h3>
+<input type="text" name="vrp_image_box_pleft" value="<?php _e($vrpOptions['image_box_pleft'], 'VisualRecentPostsPlugin') ?>"></input>
+
+<h2>Post Title Padding</h2>
+<p>Specify padding around the post title.</p>
+<h3>Padding Top</h3>
+<input type="text" name="vrp_post_title_ptop" value="<?php _e($vrpOptions['post_title_ptop'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Right</h3>
+<input type="text" name="vrp_post_title_pright" value="<?php _e($vrpOptions['post_title_pright'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Bottom</h3>
+<input type="text" name="vrp_post_title_pbottom" value="<?php _e($vrpOptions['post_title_pbottom'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Left</h3>
+<input type="text" name="vrp_post_title_pleft" value="<?php _e($vrpOptions['post_title_pleft'], 'VisualRecentPostsPlugin') ?>"></input>
+
+<h2>Post Excerpt Padding</h2>
+<p>Specify padding around the post excerpt.</p>
+<h3>Padding Top</h3>
+<input type="text" name="vrp_excerpt_ptop" value="<?php _e($vrpOptions['excerpt_ptop'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Right</h3>
+<input type="text" name="vrp_excerpt_pright" value="<?php _e($vrpOptions['excerpt_pright'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Bottom</h3>
+<input type="text" name="vrp_excerpt_pbottom" value="<?php _e($vrpOptions['excerpt_pbottom'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Left</h3>
+<input type="text" name="vrp_excerpt_pleft" value="<?php _e($vrpOptions['excerpt_pleft'], 'VisualRecentPostsPlugin') ?>"></input>
+
 <h2>Featured Post</h2>
 <h3>Include Featured Post</h3>
 <label for="include_featured_yes"><input type="radio" id="include_featured_yes" name="vrp_include_featured" value="true" <?php if ($vrpOptions['include_featured'] == "true") { _e('checked="checked"', "VisualRecentPostsPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -739,6 +930,43 @@ if (!class_exists("VisualRecentPostsPlugin")) {
 
 <h3>Featured Tag Font Size</h3>
 <input type="text" name="vrp_featured_tag_font_size" value="<?php _e($vrpOptions['featured_tag_font_size'], 'VisualRecentPostsPlugin') ?>"></input>
+
+<!-- FEATURED BOX PADDING STUFF -->
+
+<h2>Featured Image Box Padding</h2>
+<p>This is the box where the featured image thumbnail, title, and excerpt reside.</p>
+<h3>Padding Top</h3>
+<input type="text" name="vrp_fimage_box_ptop" value="<?php _e($vrpOptions['fimage_box_ptop'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Right</h3>
+<input type="text" name="vrp_fimage_box_pright" value="<?php _e($vrpOptions['fimage_box_pright'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Bottom</h3>
+<input type="text" name="vrp_fimage_box_pbottom" value="<?php _e($vrpOptions['fimage_box_pbottom'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Left</h3>
+<input type="text" name="vrp_fimage_box_pleft" value="<?php _e($vrpOptions['fimage_box_pleft'], 'VisualRecentPostsPlugin') ?>"></input>
+
+<h2>Featured Post Title Padding</h2>
+<p>Specify padding around the featured post title.</p>
+<h3>Padding Top</h3>
+<input type="text" name="vrp_fpost_title_ptop" value="<?php _e($vrpOptions['fpost_title_ptop'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Right</h3>
+<input type="text" name="vrp_fpost_title_pright" value="<?php _e($vrpOptions['fpost_title_pright'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Bottom</h3>
+<input type="text" name="vrp_fpost_title_pbottom" value="<?php _e($vrpOptions['fpost_title_pbottom'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Left</h3>
+<input type="text" name="vrp_fpost_title_pleft" value="<?php _e($vrpOptions['fpost_title_pleft'], 'VisualRecentPostsPlugin') ?>"></input>
+
+<h2>Featured Post Excerpt Padding</h2>
+<p>Specify padding around the featured post excerpt.</p>
+<h3>Padding Top</h3>
+<input type="text" name="vrp_fexcerpt_ptop" value="<?php _e($vrpOptions['fexcerpt_ptop'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Right</h3>
+<input type="text" name="vrp_fexcerpt_pright" value="<?php _e($vrpOptions['fexcerpt_pright'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Bottom</h3>
+<input type="text" name="vrp_fexcerpt_pbottom" value="<?php _e($vrpOptions['fexcerpt_pbottom'], 'VisualRecentPostsPlugin') ?>"></input>
+<h3>Padding Left</h3>
+<input type="text" name="vrp_fexcerpt_pleft" value="<?php _e($vrpOptions['fexcerpt_pleft'], 'VisualRecentPostsPlugin') ?>"></input>
+
+
 
 <div class="submit">
 <input type="submit" name="update_VisualRecentPostsPluginSettings" value="<?php _e('Update Settings', 'VisualRecentPostsPlugin') ?>" /></div>
